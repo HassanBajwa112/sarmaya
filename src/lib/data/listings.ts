@@ -37,6 +37,8 @@ export type Listing = {
   stage: string;
   shortPitch: string;
   longPitch: string;
+  /** Hero/cover image (Unsplash). */
+  imageUrl: string;
   verification: VerificationStatus;
   featured: boolean;
   diasporaNote?: string;
@@ -61,6 +63,8 @@ export const listings: Listing[] = [
       "CNC machining supplier to auto OEMs seeking growth capital to add a second shift line.",
     longPitch:
       "Family-run precision machining business with multi-year purchase orders from Tier-1 auto suppliers. Capital funds a second CNC line, tooling, and working capital for export-ready capacity. Deal structure: minority equity or profit-share; founders retain operating control.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "RDA-friendly intro path for overseas Pakistani investors.",
@@ -84,6 +88,8 @@ export const listings: Listing[] = [
       "Regional cold-storage network expanding pack-house capacity for mango and vegetable exporters.",
     longPitch:
       "Operating cold rooms and reefer logistics serving exporters across Sindh. Raise funds a new pack-house and solar backup to cut spoilage. Seeking growth partners open to profit-share over a 4-year horizon.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Structured for diaspora co-investment alongside local operators.",
@@ -107,6 +113,8 @@ export const listings: Listing[] = [
       "B2B last-mile and port-to-warehouse freight platform adding fleet and route density.",
     longPitch:
       "Asset-light logistics operator with contracted lanes from Port Qasim to industrial zones. Capital expands owned vans and a dispatch stack already in use with mid-market manufacturers.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Bilal Sheikh",
@@ -129,6 +137,8 @@ export const listings: Listing[] = [
       "Clinic OS for multi-doctor practices — scheduling, billing, and lab integration.",
     longPitch:
       "Pre-revenue SaaS with three paying pilot clinics. Founders are ex-hospital ops leads. Raise covers product hardening, HIPAA-style local data practices, and first sales hire. Equity raise with clear off-platform closing.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: false, humanReviewed: true },
     featured: true,
     diasporaNote: "Founders open to angel checks via Roshan Digital Account corridors.",
@@ -151,6 +161,8 @@ export const listings: Listing[] = [
       "Urdu-first skills marketplace connecting trainers with diaspora-funded scholarships.",
     longPitch:
       "Marketplace MVP live with 40 trainers. Pitch focuses on vocational upskilling funded by overseas relatives. Identity-verified founders; business claims limited to traction metrics reviewed manually.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: false, humanReviewed: true },
     featured: false,
     diasporaNote: "Built around diaspora scholarship pools.",
@@ -173,6 +185,8 @@ export const listings: Listing[] = [
       "C&I rooftop solar installer expanding inventory financing and EPC crews.",
     longPitch:
       "Five years of commercial rooftop installs for textile units. Raise funds inventory float and two additional EPC teams. Profit-share preferred; audited financials shared during intro calls.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Clear path for overseas Pakistanis to co-fund project pipelines.",
@@ -196,6 +210,8 @@ export const listings: Listing[] = [
       "Homegrown QSR brand opening 8 company-owned locations before franchise wave.",
     longPitch:
       "Proven single-city brand with strong unit economics. Capital builds company stores to set standards before selling franchises. Equity into the holdco — not a whole-business exit.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Mehreen Ali",
@@ -218,6 +234,8 @@ export const listings: Listing[] = [
       "Soil and irrigation sensors sold with advisory to mid-size cotton and citrus farms.",
     longPitch:
       "Hardware + advisory startup with paid pilots on 12 farms. Raise covers manufacturing batch and field agents. Founder identity verified; hardware claims reviewed against pilot invoices.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     diasporaNote: "Seeking angels familiar with agri supply chains in Punjab.",
@@ -240,6 +258,8 @@ export const listings: Listing[] = [
       "Regional medical-consumables distributor expanding SKUs and cold lines.",
     longPitch:
       "Distributor with hospital contracts across KP. Growth capital for inventory and a small cold line for vaccines and biologics. Bank statements and NTN reviewed.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Farah Khan",
@@ -262,6 +282,8 @@ export const listings: Listing[] = [
       "School-bus operator adding GPS-tracked vans under multi-year school contracts.",
     longPitch:
       "Contracted school transport with parents paying monthly. Raise purchases vans and insurance float. Existing business template with SECP and bank verification complete.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1544620341-c53ce9b7b4c7?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Kamran Iqbal",
@@ -284,6 +306,8 @@ export const listings: Listing[] = [
       "Lightweight accounting and inventory for SMEs integrating JazzCash & bank feeds.",
     longPitch:
       "SaaS with 180 paying SMEs. Raise funds product (bank feed reliability) and Karachi sales. Startup pitch template — founder professional history cross-checked.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Ideal for diaspora angels who want software exposure in Pakistan.",
@@ -306,6 +330,8 @@ export const listings: Listing[] = [
       "Ceramic tableware maker converting kilns and opening GCC wholesale channels.",
     longPitch:
       "Operating ceramics plant shifting to cleaner kilns and export packaging. Capital covers kiln retrofit and first GCC distributor deposits. Equity or profit-share both on the table.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Asif Butt",
@@ -328,6 +354,8 @@ export const listings: Listing[] = [
       "Bike-courier network for dense urban pharmacy and grocery drops under 5 km.",
     longPitch:
       "Hyperlocal courier pilots with pharmacies. Founders verified; early revenue claims reviewed via payment screenshots. Seeking first institutional-style angel intro.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: false, humanReviewed: true },
     featured: false,
     founderName: "Omar Javed",
@@ -349,6 +377,8 @@ export const listings: Listing[] = [
       "Community micro-hydro kits with prepaid metering for northern villages.",
     longPitch:
       "Hardware + ops model for village-scale hydro. Two sites commissioned; raise funds third site and metering firmware. Strong diaspora angle for community-backed capital.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Designed for diaspora community rounds alongside local cooperatives.",
@@ -371,6 +401,8 @@ export const listings: Listing[] = [
       "Independent pharmacy chain adding two stores near hospital clusters.",
     longPitch:
       "Three pharmacies with licensed pharmacists and stable scripts volume. Raise opens two more locations. Not a sale of the business — growth equity into the group.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=1600&q=80",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: false,
     founderName: "Dr. Sohail Mir",
