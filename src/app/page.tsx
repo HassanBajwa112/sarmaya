@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { EnterLoader } from "@/components/EnterLoader";
 import { ListingRow } from "@/components/ListingRow";
 import { CapitalFlowMap } from "@/components/motion/CapitalFlowMap";
 import { CountUp } from "@/components/motion/CountUp";
@@ -15,7 +14,7 @@ export default function HomePage() {
   const featured = getFeaturedListings().slice(0, 4);
 
   return (
-    <EnterLoader>
+    <>
       <InteractiveHero />
 
       {/* Trust strip — Lume-style feature row */}
@@ -158,6 +157,6 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
-    </EnterLoader>
+    </>
   );
 }
