@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Syne } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { POSITIONING } from "@/lib/data/listings";
 import "./globals.css";
 
@@ -23,6 +24,15 @@ export const metadata: Metadata = {
     template: "%s · Sarmaya",
   },
   description: POSITIONING,
+  openGraph: {
+    title: "Sarmaya — Growth investment into Pakistan",
+    description: POSITIONING,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sarmaya — Growth investment into Pakistan",
+    description: POSITIONING,
+  },
 };
 
 export default function RootLayout({
@@ -33,9 +43,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${outfit.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <SiteNav />
-        <main className="flex-1 pt-16">{children}</main>
-        <SiteFooter />
+        <SmoothScroll>
+          <SiteNav />
+          <main className="flex-1 pt-16">{children}</main>
+          <SiteFooter />
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -63,8 +63,7 @@ export const listings: Listing[] = [
       "CNC machining supplier to auto OEMs seeking growth capital to add a second shift line.",
     longPitch:
       "Family-run precision machining business with multi-year purchase orders from Tier-1 auto suppliers. Capital funds a second CNC line, tooling, and working capital for export-ready capacity. Deal structure: minority equity or profit-share; founders retain operating control.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1600&q=80",
+    imageUrl: "/media/listings/lahore-precision-parts.jpg",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "RDA-friendly intro path for overseas Pakistani investors.",
@@ -88,8 +87,7 @@ export const listings: Listing[] = [
       "Regional cold-storage network expanding pack-house capacity for mango and vegetable exporters.",
     longPitch:
       "Operating cold rooms and reefer logistics serving exporters across Sindh. Raise funds a new pack-house and solar backup to cut spoilage. Seeking growth partners open to profit-share over a 4-year horizon.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=1600&q=80",
+    imageUrl: "/media/listings/sindh-cold-chain.jpg",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Structured for diaspora co-investment alongside local operators.",
@@ -137,8 +135,7 @@ export const listings: Listing[] = [
       "Clinic OS for multi-doctor practices — scheduling, billing, and lab integration.",
     longPitch:
       "Pre-revenue SaaS with three paying pilot clinics. Founders are ex-hospital ops leads. Raise covers product hardening, HIPAA-style local data practices, and first sales hire. Equity raise with clear off-platform closing.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80",
+    imageUrl: "/media/listings/clinicstack.jpg",
     verification: { identity: true, businessClaim: false, humanReviewed: true },
     featured: true,
     diasporaNote: "Founders open to angel checks via Roshan Digital Account corridors.",
@@ -185,8 +182,7 @@ export const listings: Listing[] = [
       "C&I rooftop solar installer expanding inventory financing and EPC crews.",
     longPitch:
       "Five years of commercial rooftop installs for textile units. Raise funds inventory float and two additional EPC teams. Profit-share preferred; audited financials shared during intro calls.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80",
+    imageUrl: "/media/listings/solar-yard-faisalabad.jpg",
     verification: { identity: true, businessClaim: true, humanReviewed: true },
     featured: true,
     diasporaNote: "Clear path for overseas Pakistanis to co-fund project pipelines.",
