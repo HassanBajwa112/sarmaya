@@ -1,63 +1,57 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { EnterLoader } from "@/components/EnterLoader";
 import { ListingRow } from "@/components/ListingRow";
 import { CapitalFlowMap } from "@/components/motion/CapitalFlowMap";
 import { CountUp } from "@/components/motion/CountUp";
-import { HeroMedia } from "@/components/motion/HeroMedia";
 import { HowItWorks } from "@/components/motion/HowItWorks";
+import { InteractiveHero } from "@/components/motion/InteractiveHero";
 import { MagneticCta } from "@/components/motion/MagneticCta";
 import { Reveal } from "@/components/motion/Reveal";
-import { getFeaturedListings, POSITIONING } from "@/lib/data/listings";
-import { motionEase, usePrefersReducedMotion } from "@/lib/motion";
+import { getFeaturedListings } from "@/lib/data/listings";
 
 export default function HomePage() {
   const featured = getFeaturedListings().slice(0, 4);
-  const reduce = usePrefersReducedMotion();
 
   return (
     <EnterLoader>
-      <section className="relative min-h-[100svh] overflow-hidden grain hero-gradient">
-        <HeroMedia posterSrc="/media/hero/poster.jpg" />
+      <InteractiveHero />
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-5 pb-20 pt-28 sm:px-8 sm:pb-28">
-          <motion.p
-            className="font-display overflow-hidden text-5xl font-extrabold tracking-tight text-stone sm:text-7xl md:text-8xl"
-            initial={reduce ? false : { y: "110%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 1.05, delay: 0.2, ease: motionEase.expo }}
-          >
-            <span className="inline-block">Sarmaya</span>
-          </motion.p>
-          <motion.h1
-            className="mt-6 max-w-2xl overflow-hidden text-xl font-light leading-snug text-stone/90 sm:text-2xl md:text-3xl text-balance"
-            initial={reduce ? false : { y: "120%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.95, delay: 0.42, ease: motionEase.expo }}
-          >
-            Growth capital for businesses that keep running.
-          </motion.h1>
-          <motion.p
-            className="mt-4 max-w-lg text-sm leading-relaxed text-stone/60 sm:text-base"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.62, ease: motionEase.soft }}
-          >
-            {POSITIONING}
-          </motion.p>
-          <motion.div
-            className="mt-10 flex flex-wrap gap-4"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.78, ease: motionEase.soft }}
-          >
-            <MagneticCta href="/browse">Browse verified listings</MagneticCta>
-            <MagneticCta href="/for-investors" variant="ghost">
-              Invest from abroad
-            </MagneticCta>
-          </motion.div>
+      {/* Trust strip — Lume-style feature row */}
+      <section id="why" className="border-t border-[var(--line)] bg-ink">
+        <div className="mx-auto grid max-w-6xl gap-0 px-5 sm:px-8 md:grid-cols-3">
+          {[
+            {
+              title: "Security you can verify.",
+              body: "Manual CNIC + selfie review gates every founder before a listing goes live.",
+            },
+            {
+              title: "Human diligence.",
+              body: "Business claims checked against NTN, financials, or founder history — never automated scoring.",
+            },
+            {
+              title: "Directory, not escrow.",
+              body: "We never hold investor money. Intros here; capital moves off-platform by design.",
+            },
+          ].map((item, i) => (
+            <Reveal
+              key={item.title}
+              kind="fadeUp"
+              delay={0.08 * i}
+              className={`border-[var(--line)] py-12 md:px-8 ${
+                i < 2 ? "md:border-r" : ""
+              } ${i > 0 ? "border-t md:border-t-0" : ""}`}
+            >
+              <p className="font-display text-xs tracking-[0.25em] text-brass uppercase">
+                0{i + 1}
+              </p>
+              <h2 className="font-display mt-4 text-xl font-semibold text-stone sm:text-2xl">
+                {item.title}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-stone/55">{item.body}</p>
+            </Reveal>
+          ))}
         </div>
       </section>
 
@@ -100,28 +94,6 @@ export default function HomePage() {
               </p>
               <p className="mt-2 text-sm text-ink/55">Human-reviewed founders</p>
             </div>
-          </div>
-
-          <div className="mt-16 grid gap-12 border-t border-[var(--line-dark)] pt-16 md:grid-cols-3">
-            {[
-              {
-                title: "Identity first",
-                body: "Manual CNIC + selfie review gates every founder before a listing goes live.",
-              },
-              {
-                title: "Human verification",
-                body: "Business claims checked against NTN, financials, or founder history — never automated scoring.",
-              },
-              {
-                title: "No custody",
-                body: "We never hold investor money. Directory-only by design, keeping Tier 1 outside crowdfunding licensing.",
-              },
-            ].map((item, i) => (
-              <Reveal key={item.title} kind="slideLeft" delay={0.06 * i} duration={0.8}>
-                <h3 className="font-display text-xl font-semibold">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink/60">{item.body}</p>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>

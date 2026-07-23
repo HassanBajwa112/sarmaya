@@ -13,9 +13,16 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const isHome = pathname === "/";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-ink/80 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition ${
+        isHome
+          ? "border-b border-transparent bg-transparent"
+          : "border-b border-[var(--line)] bg-ink/80 backdrop-blur-md"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
           href="/"
@@ -49,7 +56,7 @@ export function SiteNav() {
           </Link>
           <Link
             href="/browse"
-            className="bg-brass px-4 py-2 text-sm font-medium text-ink transition hover:bg-brass-bright"
+            className="border border-brass/40 bg-brass/90 px-4 py-2 text-sm font-medium text-ink transition hover:bg-brass-bright"
           >
             Explore deals
           </Link>
