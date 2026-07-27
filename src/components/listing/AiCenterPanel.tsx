@@ -43,9 +43,8 @@ export function AiCenterPanel({
             Generated insights
           </h2>
           <p className="mt-2 max-w-xl text-sm text-muted">
-            Cached server-side. Estimates are not investment advice. Regenerates via
-            API route (heuristic seed; Claude when{" "}
-            <code className="text-ink/70">ANTHROPIC_API_KEY</code> is set).
+            Cached insights for this listing. Estimates only — not investment
+            advice. Use Regenerate to refresh the summary.
           </p>
         </div>
         <button
