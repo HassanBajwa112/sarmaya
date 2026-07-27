@@ -2,7 +2,10 @@
 
 import { motion } from "framer-motion";
 import type { VerificationStatus } from "@/lib/data/listings";
-import { verificationScore } from "@/lib/data/listings";
+import {
+  verificationTier,
+  verificationTierLabel,
+} from "@/lib/data/listings";
 import { usePrefersReducedMotion } from "@/lib/motion";
 
 export function VerificationBadge({
@@ -12,9 +15,7 @@ export function VerificationBadge({
   verification: VerificationStatus;
   compact?: boolean;
 }) {
-  const score = verificationScore(verification);
-  const label =
-    score === 3 ? "Fully verified" : score === 2 ? "Partially verified" : "Identity verified";
+  const label = verificationTierLabel(verificationTier(verification));
   const reduce = usePrefersReducedMotion();
 
   if (compact) {

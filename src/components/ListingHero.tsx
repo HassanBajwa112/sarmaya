@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Listing } from "@/lib/data/listings";
+import { formatPkrCr, investmentTermsLabel } from "@/lib/data/listings";
 import { ListingCoverImage } from "./ListingCoverImage";
 
 const fadeUp = {
@@ -82,7 +83,10 @@ export function ListingHero({ listing }: { listing: Listing }) {
           <div>
             <p className="text-xs tracking-widest text-muted uppercase">Asking</p>
             <p className="font-display mt-1 text-3xl font-semibold text-brass">
-              {listing.raiseAsk}
+              {formatPkrCr(listing.askAmountPkrCr)}
+            </p>
+            <p className="mt-1 text-sm text-stone/55">
+              {investmentTermsLabel(listing)}
             </p>
           </div>
           <div>
@@ -92,6 +96,10 @@ export function ListingHero({ listing }: { listing: Listing }) {
           <div>
             <p className="text-xs tracking-widest text-muted uppercase">Founder</p>
             <p className="mt-1 text-lg text-stone">{listing.founderName}</p>
+          </div>
+          <div>
+            <p className="text-xs tracking-widest text-muted uppercase">Trust</p>
+            <p className="mt-1 text-lg text-stone">{listing.trustScore}</p>
           </div>
         </motion.div>
       </div>

@@ -1,18 +1,19 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import { Suspense } from "react";
 import { ListingRow } from "@/components/ListingRow";
-import { CATEGORIES, filterListings } from "@/lib/data/listings";
+import { BrowseFilters } from "@/components/browse/BrowseFilters";
+import {
+  filterListings,
+  parseBrowseSearchParams,
+} from "@/lib/data/listings";
 
-export default function BrowsePage() {
-  const [category, setCategory] = useState("All");
-  const [type, setType] = useState("All");
-  const [q, setQ] = useState("");
+type Props = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
-  const results = useMemo(
-    () => filterListings({ category, type, q }),
-    [category, type, q],
-  );
+export default async function BrowsePage({ searchParams }: Props) {
+  const sp = await searchParams;
+  const opts = parseBrowseSearchParams(sp);
+  const results = filterListings(opts);
 
   return (
     <div className="min-h-screen bg-stone text-ink">
@@ -25,57 +26,37 @@ export default function BrowsePage() {
             Browse listings
           </h1>
           <p className="mt-4 max-w-xl text-stone/60">
-            Growth opportunities across Pakistan — filter by category, stage type, or
-            search.
+            Growth opportunities across Pakistan — shareable filters over seed
+            listings. Capital closes off-platform.
           </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8">
-        <div className="flex flex-col gap-4 border-b border-[var(--line-dark)] pb-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex flex-wrap gap-2">
-            <FilterChip active={category === "All"} onClick={() => setCategory("All")}>
-              All
-            </FilterChip>
-            {CATEGORIES.map((c) => (
-              <FilterChip
-                key={c}
-                active={category === c}
-                onClick={() => setCategory(c)}
-              >
-                {c}
-              </FilterChip>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="border border-[var(--line-dark)] bg-white px-3 py-2 text-sm outline-none focus:border-brass"
-            >
-              <option value="All">All types</option>
-              <option value="existing">Existing business</option>
-              <option value="startup">Startup pitch</option>
-            </select>
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search…"
-              className="min-w-[180px] border border-[var(--line-dark)] bg-white px-3 py-2 text-sm outline-none focus:border-brass"
-            />
-          </div>
-        </div>
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-10 sm:px-8 lg:flex-row lg:gap-12">
+        <Suspense fallback={<FiltersFallback />}>
+          <BrowseFilters resultCount={results.length} />
+        </Suspense>
 
-        <p className="mt-6 text-sm text-muted">
-          {results.length} listing{results.length === 1 ? "" : "s"}
-        </p>
+        <div className="min-w-0 flex-1">
+          <p className="mb-2 hidden text-sm text-muted lg:block">
+            {results.length} listing{results.length === 1 ? "" : "s"}
+          </p>
 
-        <div className="mt-2">
-          {results.map((l, i) => (
-            <ListingRow key={l.slug} listing={l} index={i} />
-          ))}
-          {results.length === 0 && (
-            <p className="py-16 text-center text-muted">No listings match these filters.</p>
+          {results.length === 0 ? (
+            <div className="border border-dashed border-[var(--line-dark)] px-6 py-20 text-center">
+              <p className="font-display text-xl font-semibold text-ink">
+                No listings match
+              </p>
+              <p className="mt-2 text-sm text-muted">
+                Clear filters or broaden ask / revenue ranges.
+              </p>
+            </div>
+          ) : (
+            <div>
+              {results.map((l, i) => (
+                <ListingRow key={l.slug} listing={l} index={i} />
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -83,26 +64,15 @@ export default function BrowsePage() {
   );
 }
 
-function FilterChip({
-  children,
-  active,
-  onClick,
-}: {
-  children: React.ReactNode;
-  active: boolean;
-  onClick: () => void;
-}) {
+function FiltersFallback() {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`px-3 py-1.5 text-xs tracking-wide transition ${
-        active
-          ? "bg-ink text-stone"
-          : "border border-[var(--line-dark)] text-ink/70 hover:border-ink"
-      }`}
-    >
-      {children}
-    </button>
+    <aside className="hidden w-64 shrink-0 animate-pulse lg:block">
+      <div className="h-8 w-24 bg-stone-muted" />
+      <div className="mt-6 space-y-4">
+        <div className="h-10 bg-stone-muted" />
+        <div className="h-24 bg-stone-muted" />
+        <div className="h-24 bg-stone-muted" />
+      </div>
+    </aside>
   );
 }
