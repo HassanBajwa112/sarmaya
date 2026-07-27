@@ -1,131 +1,100 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { StatGrid } from "@/components/dashboard/DashboardShell";
+import { PageHeading } from "@/components/dashboard/ListingLinkList";
 import {
   DEMO_INVESTOR_PREFS,
   rankListingsForInvestor,
 } from "@/lib/data/ai-insights";
-import { getFeaturedListings, getListing } from "@/lib/data/listings";
+import {
+  investorAnalytics,
+  investorNotifications,
+  investorPortfolio,
+  investorSavedSlugs,
+  investorWatchlistSlugs,
+  messages,
+} from "@/lib/data/dashboard";
+import { getListing } from "@/lib/data/listings";
 
 export const metadata: Metadata = { title: "Investor dashboard" };
 
-export default function InvestorDashboardPage() {
-  const watched = getFeaturedListings().slice(0, 4);
-  const matches = rankListingsForInvestor(DEMO_INVESTOR_PREFS).slice(0, 5);
+export default function InvestorOverviewPage() {
+  const matches = rankListingsForInvestor(DEMO_INVESTOR_PREFS).filter(
+    (m) => m.score >= 50,
+  );
+  const unread = messages.filter((m) => m.role === "investor" && m.unread).length;
+  const unreadNotifs = investorNotifications.filter((n) => !n.read).length;
 
   return (
-    <div className="min-h-screen bg-stone text-ink">
-      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
-        <p className="text-xs tracking-widest text-brass uppercase">Demo shell</p>
-        <h1 className="font-display mt-2 text-4xl font-bold">Investor dashboard</h1>
-        <p className="mt-2 text-ink/60">
-          Watchlist, AI matches from preferences, and intro requests.
-        </p>
+    <div>
+      <PageHeading
+        title="Overview"
+        description="Your diligence workspace. Deals close off-platform."
+      />
+      <StatGrid
+        items={[
+          { label: "Portfolio", value: String(investorPortfolio.length) },
+          { label: "Saved", value: String(investorSavedSlugs.length) },
+          { label: "Watchlist", value: String(investorWatchlistSlugs.length) },
+          { label: "Unread", value: String(unread + unreadNotifs) },
+        ]}
+      />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          {[
-            { label: "Saved", value: "4" },
-            { label: "Intros requested", value: "2" },
-            { label: "AI matches", value: String(matches.filter((m) => m.score >= 50).length) },
-          ].map((s) => (
-            <div key={s.label} className="border border-[var(--line-dark)] bg-white p-5">
-              <p className="text-xs tracking-widest text-muted uppercase">{s.label}</p>
-              <p className="font-display mt-2 text-3xl font-semibold">{s.value}</p>
-            </div>
-          ))}
+      <section className="mt-12">
+        <div className="flex items-end justify-between gap-4">
+          <h3 className="font-display text-xl font-semibold">Top AI matches</h3>
+          <Link
+            href="/dashboard/investor/recommendations"
+            className="text-sm text-brass hover:underline"
+          >
+            View all →
+          </Link>
         </div>
-
-        <section className="mt-14">
-          <h2 className="font-display text-2xl font-semibold">
-            Investment preferences
-          </h2>
-          <p className="mt-2 text-sm text-muted">
-            Demo stub feeding AI Investment Match — edit in Plan B.
-          </p>
-          <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-            <div className="border border-[var(--line-dark)] bg-white p-4">
-              <dt className="text-xs tracking-widest text-muted uppercase">
-                Industries
-              </dt>
-              <dd className="mt-1">{DEMO_INVESTOR_PREFS.industries.join(", ")}</dd>
-            </div>
-            <div className="border border-[var(--line-dark)] bg-white p-4">
-              <dt className="text-xs tracking-widest text-muted uppercase">
-                Ticket (PKR Cr)
-              </dt>
-              <dd className="mt-1">
-                {DEMO_INVESTOR_PREFS.ticketMinPkrCr} –{" "}
-                {DEMO_INVESTOR_PREFS.ticketMaxPkrCr}
-              </dd>
-            </div>
-            <div className="border border-[var(--line-dark)] bg-white p-4">
-              <dt className="text-xs tracking-widest text-muted uppercase">Cities</dt>
-              <dd className="mt-1">{DEMO_INVESTOR_PREFS.cities.join(", ")}</dd>
-            </div>
-            <div className="border border-[var(--line-dark)] bg-white p-4">
-              <dt className="text-xs tracking-widest text-muted uppercase">Models</dt>
-              <dd className="mt-1">{DEMO_INVESTOR_PREFS.models.join(", ")}</dd>
-            </div>
-          </dl>
-        </section>
-
-        <h2 className="font-display mt-14 text-2xl font-semibold">
-          AI recommendations
-        </h2>
         <ul className="mt-4 divide-y divide-[var(--line-dark)] border-y border-[var(--line-dark)]">
-          {matches.map((m) => {
+          {matches.slice(0, 3).map((m) => {
             const l = getListing(m.slug);
             if (!l) return null;
             return (
               <li
                 key={m.slug}
-                className="flex flex-wrap items-center justify-between gap-3 py-5"
+                className="flex items-center justify-between gap-3 py-4"
               >
-                <div>
-                  <Link
-                    href={`/listings/${l.slug}/ai`}
-                    className="font-display text-lg font-semibold hover:text-brass"
-                  >
-                    {l.title}
-                  </Link>
-                  <p className="text-sm text-muted">
-                    {m.reasons.slice(0, 2).join(" · ")}
-                  </p>
-                </div>
-                <span className="font-display text-xl font-semibold text-brass">
-                  {m.score}
-                </span>
+                <Link
+                  href={`/listings/${l.slug}/ai`}
+                  className="font-medium hover:text-brass"
+                >
+                  {l.title}
+                </Link>
+                <span className="text-brass">{m.score}</span>
               </li>
             );
           })}
         </ul>
+      </section>
 
-        <h2 className="font-display mt-14 text-2xl font-semibold">Watchlist</h2>
-        <ul className="mt-4 divide-y divide-[var(--line-dark)] border-y border-[var(--line-dark)]">
-          {watched.map((l) => (
-            <li key={l.slug} className="flex flex-wrap items-center justify-between gap-3 py-5">
-              <div>
-                <Link
-                  href={`/listings/${l.slug}`}
-                  className="font-display text-lg font-semibold hover:text-brass"
-                >
-                  {l.title}
-                </Link>
-                <p className="text-sm text-muted">
-                  {l.city} · Trust {l.trustScore} · {l.category}
-                </p>
-              </div>
-              <span className="text-sm text-ink/70">{l.raiseAsk}</span>
-            </li>
-          ))}
-        </ul>
+      <section className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          { href: "/dashboard/investor/compare", label: "Compare businesses" },
+          { href: "/dashboard/investor/meetings", label: "Meeting requests" },
+          { href: "/dashboard/investor/preferences", label: "Edit preferences" },
+          { href: "/dashboard/investor/messages", label: "Messages" },
+          { href: "/dashboard/investor/analytics", label: "Your analytics" },
+          { href: "/browse", label: "Browse marketplace" },
+        ].map((c) => (
+          <Link
+            key={c.href}
+            href={c.href}
+            className="border border-[var(--line-dark)] bg-white px-5 py-4 text-sm font-medium transition hover:border-brass/50"
+          >
+            {c.label} →
+          </Link>
+        ))}
+      </section>
 
-        <Link
-          href="/browse"
-          className="mt-10 inline-flex bg-brass px-5 py-3 text-sm font-medium text-ink hover:bg-brass-bright"
-        >
-          Find more listings
-        </Link>
-      </div>
+      <p className="mt-10 text-xs text-muted">
+        Activity snapshot · {investorAnalytics.listingsViewed} views this period
+        (seed).
+      </p>
     </div>
   );
 }
