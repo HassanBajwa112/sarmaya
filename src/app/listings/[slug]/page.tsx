@@ -10,7 +10,9 @@ import {
   FundingSummary,
   VerificationSummary,
 } from "@/components/listing/ListingSharedBlocks";
-import { getListing, listings } from "@/lib/data/listings";
+import { TrustBreakdownPanel } from "@/components/listing/TrustBreakdownPanel";
+import { getListing, getTrustScoreResult, listings } from "@/lib/data/listings";
+import Link from "next/link";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -33,6 +35,7 @@ export default async function ListingPage({ params }: Props) {
   const { slug } = await params;
   const listing = getListing(slug);
   if (!listing) notFound();
+  const trust = getTrustScoreResult(listing);
 
   return (
     <div className="bg-stone text-ink">
@@ -53,7 +56,20 @@ export default async function ListingPage({ params }: Props) {
 
         <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
           <FundingSummary listing={listing} />
+          <TrustBreakdownPanel result={trust} />
           <VerificationSummary listing={listing} />
+          <div className="border border-[var(--line-dark)] bg-white p-6">
+            <h3 className="font-display text-lg font-semibold">AI Center</h3>
+            <p className="mt-2 text-sm text-ink/65">
+              Summary, risk supplement, valuation estimate, due diligence checklist.
+            </p>
+            <Link
+              href={`/listings/${listing.slug}/ai`}
+              className="mt-4 inline-block text-sm text-brass hover:underline"
+            >
+              Open AI insights →
+            </Link>
+          </div>
           <DocumentsPanel listing={listing} />
           <ContactNextStep />
         </aside>

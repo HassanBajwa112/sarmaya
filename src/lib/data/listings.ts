@@ -4,6 +4,7 @@ import type {
   YearFinancial,
 } from "./listing-types";
 import { verificationTier } from "./listing-format";
+import { applyComputedTrustScores } from "./trust-hydrate";
 
 export type {
   Listing,
@@ -37,6 +38,9 @@ export {
   businessAgeYears,
 } from "./listing-format";
 
+export { getTrustScoreResult, buildTrustSignals } from "./trust-hydrate";
+export type { TrustScoreResult, TrustBreakdownItem, TrustSignals } from "@/lib/trust/compute-trust-score";
+
 function years(
   start: number,
   rows: [number, number, number][],
@@ -64,7 +68,7 @@ function trustFrom(v: Listing["verification"], base: number): number {
   return Math.min(98, base + bump);
 }
 
-export const listings: Listing[] = [
+const rawListings: Listing[] = [
   {
     slug: "lahore-precision-parts",
     type: "existing",
@@ -979,6 +983,9 @@ export const listings: Listing[] = [
     qa: [],
   },
 ];
+
+/** Trust scores computed server-side from verification + activity signals. */
+export const listings: Listing[] = applyComputedTrustScores(rawListings);
 
 export function getListing(slug: string): Listing | undefined {
   return listings.find((l) => l.slug === slug);

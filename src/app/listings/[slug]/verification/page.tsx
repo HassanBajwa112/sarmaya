@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getListing, listings } from "@/lib/data/listings";
+import {
+  getListing,
+  getTrustScoreResult,
+  listings,
+  verificationTier,
+  verificationTierLabel,
+} from "@/lib/data/listings";
+import {
+  getCasesForListing,
+  KIND_LABELS,
+  reviewStateLabel,
+} from "@/lib/data/verification";
+import { TrustBreakdownPanel } from "@/components/listing/TrustBreakdownPanel";
+import {
+  CaseStatePill,
+  VerificationTimeline,
+} from "@/components/verification/VerificationCaseCard";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,6 +36,10 @@ export default async function VerificationPage({ params }: Props) {
   const { slug } = await params;
   const listing = getListing(slug);
   if (!listing) notFound();
+
+  const cases = getCasesForListing(slug);
+  const tier = verificationTier(listing.verification);
+  const trust = getTrustScoreResult(listing);
 
   const layers = [
     {
@@ -67,9 +87,13 @@ export default async function VerificationPage({ params }: Props) {
           Verification status
         </h1>
         <p className="mt-3 text-ink/60">
-          Public trust layers for this listing. Reputation (Layer 5) is deferred —
-          outcome data is collected quietly for a later release.
+          Public trust layers · {verificationTierLabel(tier)}. Full review queue
+          lives in the Verification Center.
         </p>
+
+        <div className="mt-10">
+          <TrustBreakdownPanel result={trust} />
+        </div>
 
         <ul className="mt-12 space-y-0">
           {layers.map((layer) => (
@@ -91,6 +115,50 @@ export default async function VerificationPage({ params }: Props) {
             </li>
           ))}
         </ul>
+
+        {cases.length > 0 && (
+          <section className="mt-14">
+            <h2 className="font-display text-2xl font-semibold">
+              Review timeline
+            </h2>
+            <p className="mt-2 text-sm text-muted">
+              Audit trail from the Verification Center (seeded).
+            </p>
+            <div className="mt-8 space-y-8">
+              {cases.map((c) => (
+                <div
+                  key={c.id}
+                  className="border border-[var(--line-dark)] bg-white p-5"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="font-medium text-ink">{KIND_LABELS[c.kind]}</p>
+                    <CaseStatePill state={c.state} />
+                  </div>
+                  <p className="mt-1 text-xs text-muted">
+                    {reviewStateLabel(c.state)} · updated{" "}
+                    {new Date(c.updatedAt).toLocaleDateString()}
+                  </p>
+                  <VerificationTimeline caseItem={c} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div className="mt-12 flex flex-wrap gap-4 text-sm">
+          <Link
+            href={`/listings/${listing.slug}/ai`}
+            className="text-brass hover:underline"
+          >
+            AI Center →
+          </Link>
+          <Link
+            href="/dashboard/founder/verification"
+            className="text-muted hover:underline"
+          >
+            Founder Verification Center →
+          </Link>
+        </div>
       </div>
     </div>
   );
