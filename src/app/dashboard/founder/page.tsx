@@ -48,6 +48,9 @@ export default function FounderOverviewPage() {
         >
           Verification Center
         </Link>
+        <Link href="/admin" className="px-5 py-3 text-sm text-brass hover:underline">
+          Admin portal →
+        </Link>
       </div>
 
       <h3 className="font-display mt-14 text-xl font-semibold">Your listings</h3>
