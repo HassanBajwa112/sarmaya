@@ -6,6 +6,8 @@ import { useState } from "react";
 
 const links = [
   { href: "/browse", label: "Browse" },
+  { href: "/hubs/investors", label: "Hubs" },
+  { href: "/partner", label: "Partner" },
   { href: "/for-founders", label: "Founders" },
   { href: "/for-investors", label: "Investors" },
 ];
@@ -37,7 +39,8 @@ export function SiteNav() {
               key={l.href}
               href={l.href}
               className={`text-sm tracking-wide transition ${
-                pathname.startsWith(l.href)
+                pathname.startsWith(l.href) ||
+                (l.href === "/hubs/investors" && pathname.startsWith("/hubs"))
                   ? "text-brass"
                   : "text-stone/70 hover:text-stone"
               }`}

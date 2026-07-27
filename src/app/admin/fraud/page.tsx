@@ -3,7 +3,7 @@ import Link from "next/link";
 import { listings } from "@/lib/data/listings";
 import { getAiInsights } from "@/lib/data/ai-insights";
 
-export const metadata: Metadata = { title: "Admin · AI fraud flags" };
+export const metadata: Metadata = { title: "Admin · Fraud reports" };
 
 export default function AdminFraudPage() {
   const flagged = listings
@@ -17,69 +17,57 @@ export default function AdminFraudPage() {
     .filter((row) => row.flags.length > 0);
 
   return (
-    <div className="min-h-screen bg-stone text-ink">
-      <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8">
-        <Link
-          href="/admin/verification"
-          className="text-xs tracking-widest text-brass uppercase hover:underline"
-        >
-          ← Verification queue
-        </Link>
-        <p className="mt-6 text-xs tracking-widest text-brass uppercase">
-          Internal · Admin only
-        </p>
-        <h1 className="font-display mt-2 text-4xl font-bold">
-          AI fraud detection
-        </h1>
-        <p className="mt-2 text-ink/60">
-          Inconsistency flags for reviewer triage. Not shown on public listings.
-        </p>
+    <div>
+      <h1 className="font-display text-3xl font-bold text-stone">
+        Fraud reports
+      </h1>
+      <p className="mt-2 text-sm text-stone/55">
+        AI inconsistency flags plus room for manual reports. Not shown on public
+        listings.
+      </p>
 
-        <ul className="mt-12 space-y-6">
-          {flagged.map(({ listing, flags }) => (
-            <li
-              key={listing.slug}
-              className="border border-[var(--line-dark)] bg-white p-5"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <Link
-                  href={`/listings/${listing.slug}`}
-                  className="font-display text-lg font-semibold hover:text-brass"
+      <ul className="mt-10 space-y-6">
+        {flagged.map(({ listing, flags }) => (
+          <li
+            key={listing.slug}
+            className="border border-stone/15 bg-stone p-5 text-ink"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <Link
+                href={`/listings/${listing.slug}`}
+                className="font-display text-lg font-semibold hover:text-brass"
+              >
+                {listing.title}
+              </Link>
+              <span className="text-xs text-muted">
+                {flags.length} flag{flags.length === 1 ? "" : "s"}
+              </span>
+            </div>
+            <ul className="mt-4 space-y-3">
+              {flags.map((f) => (
+                <li
+                  key={f.code}
+                  className="border-t border-[var(--line-dark)] pt-3 text-sm"
                 >
-                  {listing.title}
-                </Link>
-                <span className="text-xs text-muted">
-                  {flags.length} flag{flags.length === 1 ? "" : "s"}
-                </span>
-              </div>
-              <ul className="mt-4 space-y-3">
-                {flags.map((f) => (
-                  <li
-                    key={f.code}
-                    className="border-t border-[var(--line-dark)] pt-3 text-sm"
+                  <span
+                    className={`text-[10px] tracking-widest uppercase ${
+                      f.severity === "high" ? "text-brass" : "text-muted"
+                    }`}
                   >
-                    <span
-                      className={`text-[10px] tracking-widest uppercase ${
-                        f.severity === "high"
-                          ? "text-brass"
-                          : "text-muted"
-                      }`}
-                    >
-                      {f.severity} · {f.code}
-                    </span>
-                    <p className="mt-1 text-ink/70">{f.detail}</p>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-          {flagged.length === 0 && (
-            <li className="py-16 text-center text-muted">
-              No fraud flags in current seed.
-            </li>
-          )}
-        </ul>
-      </div>
+                    {f.severity} · {f.code}
+                  </span>
+                  <p className="mt-1 text-ink/70">{f.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+        {flagged.length === 0 && (
+          <li className="py-16 text-center text-stone/50">
+            No fraud flags in current seed.
+          </li>
+        )}
+      </ul>
     </div>
   );
 }

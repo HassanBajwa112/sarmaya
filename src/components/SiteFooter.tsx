@@ -20,6 +20,21 @@ export function SiteFooter() {
               Browse listings
             </Link>
             <Link
+              href="/hubs/investors"
+              className="block text-stone/80 hover:text-brass"
+            >
+              Investor Hub
+            </Link>
+            <Link
+              href="/hubs/founders"
+              className="block text-stone/80 hover:text-brass"
+            >
+              Founder Hub
+            </Link>
+            <Link href="/partner" className="block text-stone/80 hover:text-brass">
+              Partner
+            </Link>
+            <Link
               href="/for-founders"
               className="block text-stone/80 hover:text-brass"
             >
@@ -34,8 +49,14 @@ export function SiteFooter() {
           </div>
           <div className="space-y-3 text-sm">
             <p className="font-display text-xs tracking-[0.2em] text-brass uppercase">
-              Account
+              Company
             </p>
+            <Link href="/about" className="block text-stone/80 hover:text-brass">
+              About
+            </Link>
+            <Link href="/contact" className="block text-stone/80 hover:text-brass">
+              Contact
+            </Link>
             <Link href="/auth" className="block text-stone/80 hover:text-brass">
               Sign in
             </Link>
